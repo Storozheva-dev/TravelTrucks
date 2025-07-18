@@ -1,0 +1,106 @@
+.form {
+    border: 1px solid var(--gray-light);
+    border-radius: 10px;
+    padding: 44px;
+    max-width: 641px;
+    height: 588px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+.formContent {
+    width: 100%;
+    box-sizing: border-box;
+    width: 527px;
+}
+.title {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.2;
+    color: var(--main);
+    margin-bottom: 8px;
+}
+.description {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--gray);
+    margin-bottom: 24px;
+}
+.input {
+    background: var(--inputs);
+    border-radius: 12px;
+    padding: 18px;
+    width: 527px;
+    height: 60px;
+    margin-bottom: 14px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--main);
+}
+.textarea {
+    background: var(--inputs);
+    border-radius: 10px;
+    padding: 18px;
+    width: 527px;
+    height: 118px;
+    margin-bottom: 24px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--main);
+    resize: vertical;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #aaa transparent;
+}
+.textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+.textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+.textarea::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+.textarea::-webkit-scrollbar {
+    width: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.button {
+    border-radius: 200px;
+    padding: 16px 60px;
+    width: 166px;
+    height: 56px;
+    background: var(--button);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--white);
+    transition: all 0.3s ease;
+}
+.button:hover {
+    background: var(--button-hover);
+}
+.button:active {
+    transform: scale(0.95);
+    outline: none;
+    border: none;
+}

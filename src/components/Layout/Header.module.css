@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+    gap: 450px;
+    align-items: center;
+    background-color: var(--inputs);
+}
+.logo {
+    width: 136px;
+    height: 16px;
+    margin-top: 28px;
+    margin-bottom: 28px;
+    margin-left: 64px;
+}

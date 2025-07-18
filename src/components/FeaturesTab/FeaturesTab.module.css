@@ -1,0 +1,73 @@
+.features {
+    background: var(--inputs);
+    border-radius: 10px;
+    padding: 44px 80px;
+    width: 631px;
+    height: 588px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+.mainCategory {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    
+}
+.featureItem {
+    background: var(--badges);
+    mix-blend-mode: multiply;
+    border-radius: 100px;
+    padding: 12px 18px;
+    min-width: 87px;
+    height: 48px;
+    gap: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center
+
+
+}
+.featureIcon {
+    width: 20px;
+    height: 20px; 
+}
+.featureLabel {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--main);
+}
+.detailsTitle {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.2;
+    color: var(--main);
+    margin-bottom: 24px;
+}
+.detailsCategory {
+    border-top: 1px solid var(--gray-light);
+    padding-top: 24px;
+
+}
+.detailKey,
+.detailValue {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--main);
+}
+.detailItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}

@@ -1,0 +1,121 @@
+.hiddenCheckbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+.nameCategory {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--gray);
+}
+.location {
+    position: relative;
+}
+.input {
+    background: var(--inputs);
+    border-radius: 12px;
+    padding-left: 48px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    width: 360px;
+    height: 56px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--main);
+    margin-top: 8px;
+    margin-bottom: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.iconMap {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 40%;
+    left: 20px;   
+}
+.title {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #101828;
+    margin-top: 32px;
+    margin-bottom: 24px;
+}
+.filtersList {
+    border-top: 1px solid var(--gray-light);
+    width: 360px;  
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px 12px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding-top: 24px;
+    
+}
+.itemFilter {
+    border: 1px solid #dadde1;
+    border-radius: 12px;
+    width: 112px;
+    height: 96px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+   justify-content: center;
+   
+}
+.itemFilter:hover{
+    border: 1px solid var(--button-hover);
+    
+}
+.customCheckbox {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+   
+
+}
+.icon {
+    width: 32px;
+    height: 32px;  
+}
+.spanCategory {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: var(--main);
+}
+.button {
+    margin-top: 40px;
+    border-radius: 200px;
+    padding: 16px 60px;
+    width: 166px;
+    height: 56px;
+    background: var(--button);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.button:hover {
+    background: var(--button-hover);
+    color: var(--white);
+}
+.button:active {
+    transform: scale(0.95);
+}
+

@@ -1,0 +1,20 @@
+.list {
+    display: flex;
+    gap: 32px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.link {
+    color: var(--main);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.link:hover {
+    color: var(--button);
+}
+.link.active {
+    color: var(--button-hover);
+}

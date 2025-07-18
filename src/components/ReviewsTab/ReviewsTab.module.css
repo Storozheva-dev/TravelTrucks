@@ -1,0 +1,31 @@
+.reviewsTab {
+    width: 631px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+}
+.aboutUser {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.reviewerGrade {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: flex-start;
+}
+.star {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+}
+.reviewText {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text);
+}
