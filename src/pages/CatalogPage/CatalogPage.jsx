@@ -7,7 +7,6 @@ import {
   selectCampers, 
   selectPagination, 
   selectIsLoading, 
-  selectError,
   selectFilters
 } from "../../redux/campers/selectors";
 import { fetchCampers } from "../../redux/campers/operations";
@@ -25,7 +24,6 @@ useEffect(() => {
   const campers = useSelector(selectCampers);
   const { hasMore, page } = useSelector(selectPagination);
   const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
   const filters = useSelector(selectFilters);
 
   // першапорція
@@ -49,11 +47,21 @@ useEffect(() => {
         <CatalogFilters />
       </aside>
       <main className={css.main}>
-  {error && <p className={css.error}>Error: {error}</p>}
   {/* чеки для лоадера */}
   {isLoading && campers.length === 0 && <Loader />}
   {campers.length > 0 && <CatalogList items={campers} />}
-  {!isLoading && campers.length === 0 && <p>No campers found</p>}
+  {!isLoading && campers.length === 0 && (
+  <div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '200px',
+  width: '888px'
+}}>
+  <p style={{ fontSize: '18px', color: '#555' }}>No campers found</p>
+</div>
+
+)}
   {hasMore && campers.length > 0 && (
     <div>
       <button

@@ -79,6 +79,7 @@
     align-items: center;
     flex-direction: column;
    justify-content: center;
+   transition: all 0.3s ease;
    
 }
 .itemFilter:hover{

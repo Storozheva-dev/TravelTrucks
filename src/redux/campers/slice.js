@@ -51,10 +51,14 @@ const campersSlice = createSlice({
       localStorage.setItem('camperFavorites', JSON.stringify(state.favorites));
     },
     setFilters(state, action) {
-      state.filters = { ...state.filters, ...action.payload };
-      state.pagination.page = 1;
-      state.items = [];
-    },
+    for (const key in action.payload) {
+    if (key in state.filters) {
+      state.filters[key] = action.payload[key];
+    }
+  }
+  state.pagination.page = 1;
+  state.items = [];
+},
     setPage(state, action) {
       state.pagination.page = action.payload;
     },

@@ -31,6 +31,7 @@ export const selectPagination = createSelector(
 
     
 export const selectAllCampers = (state) => selectCampersState(state).items || [];
+
 export const selectActiveFilters = createSelector(
   [selectFilters],
   (filters) => Object.entries(filters)

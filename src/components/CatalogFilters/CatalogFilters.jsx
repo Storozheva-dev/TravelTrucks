@@ -4,13 +4,10 @@ import { selectFilters } from "../../redux/campers/selectors";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setFilters } from "../../redux/campers/slice";
+import { setFilters, clearCampers } from "../../redux/campers/slice";
 import { fetchCampers } from "../../redux/campers/operations";
 
 function CatalogFilters() {
-// для мап інпут
-const [isFocused, setIsFocused] = useState(false);
-
 
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
@@ -43,24 +40,27 @@ const [isFocused, setIsFocused] = useState(false);
     });
   };
 
-  const handleFilter = () => {
-    const transmission = equipment.automatic ? 'automatic' : undefined;
-    const form = Object.entries(vehicleType).find(([_, v]) => v)?.[0] || undefined;
+const handleFilter = () => {
+  const transmission = equipment.automatic ? 'automatic' : ''; // пустая строка если не активен
+  const form = Object.entries(vehicleType).find(([_, v]) => v)?.[0] || '';
 
-    const updatedFilters = {};
-    if (city.trim()) updatedFilters.location = city.trim();
-    if (transmission) updatedFilters.transmission = transmission;
-    if (equipment.AC) updatedFilters.AC = true;
-    if (equipment.kitchen) updatedFilters.kitchen = true;
-    if (equipment.TV) updatedFilters.TV = true;
-    if (equipment.bathroom) updatedFilters.bathroom = true;
-    if (form) updatedFilters.form = form;
-
-    
-
-    dispatch(setFilters(updatedFilters));
-    dispatch(fetchCampers(updatedFilters));
+  const updatedFilters = {
+    location: city.trim() || '',
+    transmission,
+    AC: equipment.AC,
+    kitchen: equipment.kitchen,
+    TV: equipment.TV,
+    bathroom: equipment.bathroom,
+    form,
   };
+
+  dispatch(setFilters(updatedFilters));
+  dispatch(clearCampers());
+  dispatch(fetchCampers(updatedFilters));
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
 
   return (
     <div className={css.filtersComponent}>
