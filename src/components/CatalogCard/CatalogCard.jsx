@@ -1,29 +1,35 @@
 import css from "./CatalogCard.module.css";
-import { useDispatch,  } from "react-redux";
-// import { toggleFavorite } from "../../redux/campers/slice";
-// import { selectFavorites } from "../../redux/Campers/Selectors";
-import features from "../../constants/features";
-import { HeartIcon, StarFullIcon, StarEmptyIcon, MapIcon } from "../../icons";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { HeartIcon, StarFullIcon, MapIcon } from "../../icons";
+import features from "../../constants/features";
+import { addToFavorites, removeFromFavorites } from "../../redux/campers/slice";
+import { selectIsFavorite } from "../../redux/campers/selectors";
 
 const CatalogCard = ({ camper }) => {
   const dispatch = useDispatch();
-  // const favorites = useSelector(selectFavorites(camper.id));
-  // const handleToggle = () => dispatch(toggleFavorite(camper.id));
+  const isFavorite = useSelector((state) => selectIsFavorite(state, camper.id));
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      dispatch(removeFromFavorites(camper.id));
+    } else {
+      dispatch(addToFavorites(camper));
+    }
+  };
 
   const truncate = (text, maxLength) => {
     if (!text) return '';
     return text.length > maxLength ? text.slice(0, maxLength).trimEnd() + '...' : text;
   };
 
-  // пріоритетні категорії для прев'ю
   const previewKeys = ['transmission', 'engine', 'kitchen', 'AC'];
   const validFeatures = features.filter(({ key, expected }) => {
     const value = camper[key];
     if (expected) return value === expected;
     return typeof value === 'boolean' && value === true;
   });
-// добиваєм 4 категорії для прев'ю
+
   const sortedFeatures = validFeatures
     .sort((a, b) => {
       const aIndex = previewKeys.indexOf(a.key);
@@ -40,8 +46,10 @@ const CatalogCard = ({ camper }) => {
           <h2 className={css.name}>{camper.name}</h2>
           <div className={css.about}>
             <p className={css.price}>${camper.price.toFixed(2)}</p>
-            <HeartIcon className={css.heart} />
-            {/* className={favorites ? `${css.heart} ${css.active}` : css.heart} onClick={handleToggle} */}
+            <HeartIcon
+              className={`${css.heart} ${isFavorite ? css.active : ''}`}
+              onClick={handleToggleFavorite}
+            />
           </div>
         </div>
 
@@ -68,9 +76,9 @@ const CatalogCard = ({ camper }) => {
           </ul>
         </div>
 
-       <Link to={`/catalog/${camper.id}`} className={css.button}>
-      Show More
-    </Link>
+        <Link to={`/catalog/${camper.id}`} className={css.button}>
+          Show More
+        </Link>
       </div>
     </div>
   );

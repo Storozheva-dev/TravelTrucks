@@ -40,3 +40,5 @@ export const selectActiveFilters = createSelector(
     })
     .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 );
+export const selectIsFavorite = (state, camperId) => 
+  (state.campers?.favorites || []).some(item => item.id === camperId);

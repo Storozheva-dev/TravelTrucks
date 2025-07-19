@@ -44,6 +44,14 @@
     box-shadow: none;
 }
 
+.tabButton:hover,
+.tabButton:focus,
+.tabButton:active {
+    text-decoration: none;
+    color: inherit;
+    background-color: transparent;
+}
+
 .active::after {
     content: "";
     position: absolute;

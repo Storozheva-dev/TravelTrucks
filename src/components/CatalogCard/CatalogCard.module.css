@@ -10,10 +10,12 @@
     padding: 24px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+
 .card:hover {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.06);
     transform: translateY(-2px);
 }
+
 img {
     border-radius: 10px;
     width: 292px;
@@ -31,61 +33,87 @@ img {
     margin-bottom: 8px;
     justify-content: space-between;
 }
+
 .name {
     font-weight: 600;
     font-size: 24px;
     line-height: 1.33333;
-    color: var(--main);  
+    color: var(--main);
 }
+
 .about {
     display: flex;
-    gap: 12px; 
+    gap: 12px;
 }
+
 .price {
     font-weight: 600;
     font-size: 24px;
     line-height: 1.33333;
     color: var(--main);
 }
+
 .heart {
+    fill: var(--main);
+    cursor: pointer;
+    transition: fill 0.3s ease, transform 0.3s ease;
     width: 25px;
     height: 24px;
+    outline: none;
 }
+
+.heart:hover {
+    transform: scale(1.2);
+    color: var(--button) !important;
+    outline: none;
+}
+
+.heart.active {
+    color: var(--button-hover);
+    outline: none;
+}
+
 .secondLine {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 24px; 
-     
+    margin-bottom: 24px;
+
 }
+
 .star {
     width: 16px;
     height: 16px;
     margin-right: 4px;
 }
+
 .underlineStyle {
     text-decoration: underline;
     text-decoration-skip-ink: none;
     display: flex;
     margin-right: 16px;
 }
+
 .rating {
     font-weight: 400;
     font-size: 16px;
     line-height: 1.5;
     color: var(--main);
 }
+
 .map {
     width: 16px;
     height: 16px;
     margin-right: 4px;
 }
+
 .location {
     font-weight: 400;
     font-size: 16px;
     line-height: 1.5;
     color: var(--main);
 }
+
 .description {
     font-weight: 400;
     font-size: 16px;
@@ -93,13 +121,15 @@ img {
     color: var(--text);
     margin-bottom: 24px;
 }
+
 .features {
     display: flex;
-    flex-wrap:wrap; 
+    flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 24px;
     width: 400px;
 }
+
 .item {
     background: #f2f4f7;
     mix-blend-mode: multiply;
@@ -109,16 +139,19 @@ img {
     gap: 3px;
     align-items: center;
 }
+
 .icon {
     width: 20px;
     height: 20px;
 }
+
 label {
     font-weight: 500;
     font-size: 16px;
     line-height: 1.5;
     color: var(--main);
 }
+
 .button {
     border-radius: 200px;
     display: flex;
@@ -138,6 +171,7 @@ label {
     text-decoration: none ! important;
     user-select: none;
 }
+
 .button:hover {
     border: none;
     background: var(--button-hover);
@@ -151,4 +185,3 @@ label {
 .button:focus {
     outline: none;
 }
-

@@ -2,7 +2,18 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchCampers, fetchCamperById } from './operations';
 
 
+const loadFavoritesFromLocalStorage = () => {
+  try {
+    const favorites = localStorage.getItem('camperFavorites');
+    return favorites ? JSON.parse(favorites) : [];
+  } catch (error) {
+    console.error('Error loading favorites from localStorage:', error);
+    return [];
+  }
+};
+
 const initialState = {
+  favorites: loadFavoritesFromLocalStorage(),
   items: [],
   total: 0,
   currentCamper: null,
@@ -27,6 +38,18 @@ const campersSlice = createSlice({
   name: 'campers',
   initialState,
   reducers: {
+    addToFavorites: (state, action) => {
+      const camper = action.payload;
+      if (!state.favorites.some(item => item.id === camper.id)) {
+        state.favorites.push(camper);
+        localStorage.setItem('camperFavorites', JSON.stringify(state.favorites));
+      }
+    },
+    removeFromFavorites: (state, action) => {
+      const camperId = action.payload;
+      state.favorites = state.favorites.filter(item => item.id !== camperId);
+      localStorage.setItem('camperFavorites', JSON.stringify(state.favorites));
+    },
     setFilters(state, action) {
       state.filters = { ...state.filters, ...action.payload };
       state.pagination.page = 1;
@@ -90,5 +113,5 @@ const campersSlice = createSlice({
   }
 });
 
-export const { setFilters, setPage, clearCampers } = campersSlice.actions;
+export const { setFilters, setPage, clearCampers, addToFavorites, removeFromFavorites } = campersSlice.actions;
 export default campersSlice.reducer;

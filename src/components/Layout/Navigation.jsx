@@ -11,7 +11,7 @@ const Navigation = () => {
                     </NavLink>
                 </li>
                 <li className={css.item}>
-                    <NavLink to="/catalog" className={({ isActive }) => isActive ? `${css.link} ${css.active}` : css.link}>
+                    <NavLink to="/catalog" end className={({ isActive }) => isActive ? `${css.link} ${css.active}` : css.link}>
                         Catalog
                     </NavLink>
                 </li>
