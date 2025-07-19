@@ -9,37 +9,34 @@ const fetchCampers = createAsyncThunk(
     // console.log("filters из Redux:", filters);
 
     try {
-   const supportedParams = {
-  limit: 4,
-  page: filters.page || 1,
-};
+      const supportedParams = {
+        limit: 4,
+        page: filters.page || 1,
+      };
 
-if (filters.location && filters.location.trim() !== '') {
-  supportedParams.location = filters.location.trim();
-}
+      if (filters.location && filters.location.trim() !== "") {
+        supportedParams.location = filters.location.trim();
+      }
 
-if (filters.form && filters.form.trim() !== '') {
-  supportedParams.form = filters.form.trim().toLowerCase();
-}
+      if (filters.form && filters.form.trim() !== "") {
+        supportedParams.form = filters.form.trim().toLowerCase();
+      }
 
-if (filters.transmission && filters.transmission.trim() !== '') {
-  supportedParams.transmission = filters.transmission.trim();
-}
+      if (filters.transmission && filters.transmission.trim() !== "") {
+        supportedParams.transmission = filters.transmission.trim();
+      }
 
-// Только если true
-['AC', 'kitchen', 'TV', 'bathroom'].forEach(key => {
-  if (filters[key] === true) {
-    supportedParams[key] = true;
-  }
-});
-
+      // Только если true
+      ["AC", "kitchen", "TV", "bathroom"].forEach((key) => {
+        if (filters[key] === true) {
+          supportedParams[key] = true;
+        }
+      });
 
       const response = await axios.get(BASE_URL, {
         params: supportedParams,
         timeout: 5000,
-        
       });
-     
 
       const data = response.data;
       if (!data) throw new Error("API returned empty response");
@@ -53,15 +50,23 @@ if (filters.transmission && filters.transmission.trim() !== '') {
         page: supportedParams.page,
         limit: supportedParams.limit,
       };
-
     } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // чтобы при фильтрации не было ошибки 404 в консоли
+        return {
+          items: [],
+          total: 0,
+          page: filters.page || 1,
+          limit: 4,
+        };
+      }
+
       return rejectWithValue(
         error.response?.data?.message || error.message || "Network error"
       );
     }
   }
 );
-
 
 // по айді
 const fetchCamperById = createAsyncThunk(

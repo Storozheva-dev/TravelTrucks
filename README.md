@@ -1,12 +1,39 @@
-# React + Vite
+TravelTrucks SPA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Features:
 
-Currently, two official plugins are available:
+View a catalog of campers
+Filter campers by various features
+View detailed information for each camper
+Book a camper through a mock booking form
+Responsive for desktop (no mobile or tablet version)
+⚠️ Comment submission functionality is not implemented.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Technologies Used:
 
-## Expanding the ESLint configuration
+React
+React Router
+Redux Toolkit
+Axios
+CSS Modules
+MockAPI for backend simulation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Installation:
+
+1. Clone the repository:
+   git clone https://github.com/your-username/camper-rental.git
+
+2. Navigate to the project folder:
+   cd camper-rental
+
+3. Install dependencies:
+   npm install
+
+4. Start the development server:
+   npm run dev
+
+Author:
+Created by Bohdana Chebotarova, frontend developer.
+This project was developed as part of the educational curriculum at GoIT School.
+
+Thank you for visiting!

@@ -19,15 +19,17 @@ const CatalogCard = ({ camper }) => {
   };
 
   const truncate = (text, maxLength) => {
-    if (!text) return '';
-    return text.length > maxLength ? text.slice(0, maxLength).trimEnd() + '...' : text;
+    if (!text) return "";
+    return text.length > maxLength
+      ? text.slice(0, maxLength).trimEnd() + "..."
+      : text;
   };
 
-  const previewKeys = ['transmission', 'engine', 'kitchen', 'AC'];
+  const previewKeys = ["transmission", "engine", "kitchen", "AC"];
   const validFeatures = features.filter(({ key, expected }) => {
     const value = camper[key];
     if (expected) return value === expected;
-    return typeof value === 'boolean' && value === true;
+    return typeof value === "boolean" && value === true;
   });
 
   const sortedFeatures = validFeatures
@@ -47,7 +49,7 @@ const CatalogCard = ({ camper }) => {
           <div className={css.about}>
             <p className={css.price}>${camper.price.toFixed(2)}</p>
             <HeartIcon
-              className={`${css.heart} ${isFavorite ? css.active : ''}`}
+              className={`${css.heart} ${isFavorite ? css.active : ""}`}
               onClick={handleToggleFavorite}
             />
           </div>
@@ -68,7 +70,7 @@ const CatalogCard = ({ camper }) => {
         <div className={css.categories}>
           <ul className={css.features}>
             {sortedFeatures.map(({ key, expected, label, icon: Icon }) => (
-              <li className={css.item} key={`${key}-${expected ?? 'bool'}`}>
+              <li className={css.item} key={`${key}-${expected ?? "bool"}`}>
                 <Icon className={css.icon} />
                 {label}
               </li>
