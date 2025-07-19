@@ -6,10 +6,11 @@ import {
   selectCampers, 
   selectPagination, 
   selectIsLoading, 
-  selectError 
+  selectError,
+  selectFilters
 } from "../../redux/campers/selectors";
 import { fetchCampers } from "../../redux/campers/operations";
-import { setPage } from "../../redux/campers/slice";
+import { setPage, setFilters } from "../../redux/campers/slice";
 import CatalogFilters from "../../components/CatalogFilters/CatalogFilters";
 
 function CatalogPage() {
@@ -18,11 +19,15 @@ function CatalogPage() {
   const { hasMore, page } = useSelector(selectPagination);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
+  const filters = useSelector(selectFilters);
 
   // першапорція
   useEffect(() => {
-  dispatch(fetchCampers({ page }));
-}, [dispatch, page]);
+  console.log('Fetching with params:', { page, ...filters });
+  dispatch(fetchCampers({ page, ...filters }));
+}, [dispatch, page, filters]);
+
+
 
 
   // підгрузка нових карток

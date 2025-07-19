@@ -3,5 +3,53 @@
     width: 1440px;
     height: 100%;
     padding: 48px 64px 80px 64px;
+    display: flex;
+    flex-direction: column;
+}
 
+.bottomContent {
+    display: flex;
+    gap: 40px;
+    border-top: 1px solid var(--gray-light);
+    padding-top: 44px;
+}
+
+.TABSBtn {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    margin-bottom: 24px;
+}
+
+.tabButton {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.2;
+    color: var(--main);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tabButton:hover {
+    transform: scale(0.95);
+}
+
+.tabButton:active {
+    outline: none;
+    border: none;
+}
+
+.tabButton:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.active::after {
+    content: "";
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--button-hover);
 }

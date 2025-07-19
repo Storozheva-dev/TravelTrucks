@@ -3,109 +3,136 @@ import { ACIcon, AutomaticIcon, KitchenIcon, TVIcon, BathroomIcon, VanIcon, Full
 import { selectFilters } from "../../redux/campers/selectors";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setFilters } from "../../redux/campers/slice";
+import { fetchCampers } from "../../redux/campers/operations";
 
 function CatalogFilters() {
+  const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
+  const [city, setCity] = useState(filters.location || '');
 
-    
-    const [city, setCity] = useState('');
-    
+  // Состояния для чекбоксов, инициализируем из Redux-фильтров
+  const [equipment, setEquipment] = useState({
+    AC: filters.AC || false,
+    automatic: filters.transmission === 'automatic',
+    kitchen: filters.kitchen || false,
+    TV: filters.TV || false,
+    bathroom: filters.bathroom || false,
+  });
 
-    return (
-      
-      <div className={css.filtersComponent}>
-              <div className={css.location}>
-                <h2 className={css.nameCategory}>Location</h2>
-                <input className={css.input} type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
-                <MapIcon className={css.iconMap} />
-            </div>
+  const [vehicleType, setVehicleType] = useState({
+    panelTruck: filters.form === 'panelTruck',
+    fullyIntegrated: filters.form === 'fullyIntegrated',
+    alcove: filters.form === 'alcove',
+  });
+
+  // Обработчики меняют состояние по onChange инпута
+  const handleEquipmentChange = (name) => {
+    setEquipment(prev => ({ ...prev, [name]: !prev[name] }));
+  };
+
+  const handleVehicleTypeChange = (name) => {
+    setVehicleType(prev => {
+      // Чтобы был выбор только одного типа (radio-like)
+      const reset = { panelTruck: false, fullyIntegrated: false, alcove: false };
+      reset[name] = !prev[name];
+      return reset;
+    });
+  };
+
+  const handleFilter = () => {
+    const transmission = equipment.automatic ? 'automatic' : undefined;
+    const form = Object.entries(vehicleType).find(([_, v]) => v)?.[0] || undefined;
+
+    const updatedFilters = {};
+    if (city.trim()) updatedFilters.location = city.trim();
+    if (transmission) updatedFilters.transmission = transmission;
+    if (equipment.AC) updatedFilters.AC = true;
+    if (equipment.kitchen) updatedFilters.kitchen = true;
+    if (equipment.TV) updatedFilters.TV = true;
+    if (equipment.bathroom) updatedFilters.bathroom = true;
+    if (form) updatedFilters.form = form;
+
+    console.log("Filters to dispatch:", updatedFilters);
+
+    dispatch(setFilters(updatedFilters));
+    dispatch(fetchCampers(updatedFilters));
+  };
+
+  return (
+    <div className={css.filtersComponent}>
+      <div className={css.location}>
+        <h2 className={css.nameCategory}>Location</h2>
+        <input 
+          className={css.input} 
+          type="text" 
+          placeholder="City" 
+          value={city} 
+          onChange={(e) => setCity(e.target.value)} 
+        />
+        <MapIcon className={css.iconMap} />
+      </div>
+
       <div className={css.filters}>
         <h2 className={css.nameCategory}>Filters</h2>
+
         <div className={css.equipmentFilter}>
           <h3 className={css.title}>Vehicle equipment</h3>
           <ul className={css.filtersList}>
-            <li className={css.itemFilter}>
-              <label className={filters.AC ? css.checked : ''}>
-                <input type="checkbox" checked={filters.AC} className={css.hiddenCheckbox} readOnly />
-                <div className={css.customCheckbox}>
-                  <ACIcon  className={css.icon}/>
-                  <span className={css.spanCategory}>AC</span>
-                </div>
-              </label>
-            </li>
-            <li className={css.itemFilter}>
-              <label className={filters.automatic ? css.checked : ''}>
-                <input type="checkbox" checked={filters.automatic} className={css.hiddenCheckbox} readOnly />
-                <div className={css.customCheckbox}>
-                  <AutomaticIcon className={css.icon} />
-                  <span className={css.spanCategory}>Automatic</span>
-                </div>
-              </label>
-            </li>
-            <li className={css.itemFilter}>
-              <label className={filters.kitchen ? css.checked : ''}>
-                <input type="checkbox" checked={filters.kitchen} className={css.hiddenCheckbox} readOnly />
-                <div className={css.customCheckbox}>
-                  <KitchenIcon className={css.icon} />
-                  <span className={css.spanCategory}>Kitchen</span>
-                </div>
-              </label>
-            </li>
-            <li className={css.itemFilter}>
-              <label className={filters.TV ? css.checked : ''}>
-                <input type="checkbox" checked={filters.TV} className={css.hiddenCheckbox} readOnly />
-                <div className={css.customCheckbox}>
-                  <TVIcon className={css.icon} />
-                  <span className={css.spanCategory}>TV</span>
-                </div>
-              </label>
-            </li>
-            <li className={css.itemFilter}>
-              <label className={filters.bathroom ? css.checked : ''}>
-                <input type="checkbox" checked={filters.bathroom} className={css.hiddenCheckbox} readOnly />
-                <div className={css.customCheckbox}>
-                  <BathroomIcon className={css.icon} />
-                  <span className={css.spanCategory}>Bathroom</span>
-                </div>
-              </label>
-            </li>
+            {['AC', 'automatic', 'kitchen', 'TV', 'bathroom'].map((item) => (
+              <li key={item} className={`${css.itemFilter} ${equipment[item] ? css.checked : ''}`}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={equipment[item]}
+                    onChange={() => handleEquipmentChange(item)}
+                    className={css.hiddenCheckbox}
+                  />
+                  <div className={css.customCheckbox}>
+                    {item === 'AC' && <ACIcon className={css.icon} />}
+                    {item === 'automatic' && <AutomaticIcon className={css.icon} />}
+                    {item === 'kitchen' && <KitchenIcon className={css.icon} />}
+                    {item === 'TV' && <TVIcon className={css.icon} />}
+                    {item === 'bathroom' && <BathroomIcon className={css.icon} />}
+                    <span className={css.spanCategory}>
+                      {item === 'AC' ? 'AC' : item === 'automatic' ? 'Automatic' : item.charAt(0).toUpperCase() + item.slice(1)}
+                    </span>
+                  </div>
+                </label>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div className={css.type}>
           <h3 className={css.title}>Vehicle type</h3>
           <ul className={css.filtersList}>
-            <li className={css.itemFilter}>
-              <label className={filters.van ? css.checked : ''}>
-                <input type="checkbox" checked={filters.van} className={css.hiddenCheckbox} readOnly />
-                <div className={css.customCheckbox}>
-                  <VanIcon className={css.icon} />
-                  <span className={css.spanCategory}>Van</span>
-                </div>
-              </label>
-            </li>
-            <li className={css.itemFilter}>
-              <label className={filters.fullyIntegrated ? css.checked : ''}>
-                <input type="checkbox" checked={filters.fullyIntegrated} className={css.hiddenCheckbox} readOnly />
-                <div className={css.customCheckbox}>
-                  <FullyIntegratedIcon className={css.icon} />
-                  <span className={css.spanCategory}>Fully Integrated</span>
-                </div>
-              </label>
-            </li>
-            <li className={css.itemFilter}>
-              <label className={filters.alcove ? css.checked : ''}>
-                <input type="checkbox" checked={filters.alcove} className={css.hiddenCheckbox} readOnly />
-                <div className={css.customCheckbox}>
-                  <AlcoveIcon className={css.icon} />
-                  <span className={css.spanCategory}>Alcove</span>
-                </div>
-              </label>
-            </li>
+            {['panelTruck', 'fullyIntegrated', 'alcove'].map((type) => (
+              <li key={type} className={`${css.itemFilter} ${vehicleType[type] ? css.checked : ''}`}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={vehicleType[type]}
+                    onChange={() => handleVehicleTypeChange(type)}
+                    className={css.hiddenCheckbox}
+                  />
+                  <div className={css.customCheckbox}>
+                    {type === 'panelTruck' && <VanIcon className={css.icon} />}
+                    {type === 'fullyIntegrated' && <FullyIntegratedIcon className={css.icon} />}
+                    {type === 'alcove' && <AlcoveIcon className={css.icon} />}
+                    <span className={css.spanCategory}>
+                      {type === 'panelTruck' ? 'Van' : type === 'fullyIntegrated' ? 'Fully Integrated' : 'Alcove'}
+                    </span>
+                  </div>
+                </label>
+              </li>
+            ))}
           </ul>
         </div>
-            </div>
-            <button className={css.button} onClick={() => handleFilter({ city })} disabled={!city}>Search</button>
+      </div>
+
+      <button className={css.button} onClick={handleFilter}>Search</button>
     </div>
   );
 }

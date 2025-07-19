@@ -1,18 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchCampers, fetchCamperById } from './operations';
 
+
 const initialState = {
   items: [],
   total: 0,
   currentCamper: null,
-  // favorites: [],
   isLoading: false,
   error: null,
-
   filters: {
     location: '',
-    AC: false, 
-    automatic: false,
+    AC: false,
+    transmission: '',
     kitchen: false,
     TV: false,
     bathroom: false,
@@ -36,15 +35,6 @@ const campersSlice = createSlice({
     setPage(state, action) {
       state.pagination.page = action.payload;
     },
-    toggleFavorite(state, action) {
-      const camperId = action.payload;
-      const isFavorite = state.favorites.includes(camperId);
-      if (isFavorite) {
-        state.favorites = state.favorites.filter(id => id !== camperId);
-      } else {
-        state.favorites.push(camperId);
-      }
-    },
     clearCampers(state) {
       state.items = [];
       state.total = 0;
@@ -52,40 +42,39 @@ const campersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // список
       .addCase(fetchCampers.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchCampers.fulfilled, (state, action) => {
-        // console.log('Fetched campers:', action.payload);
         state.isLoading = false;
-        const { items, total, page, limit = 4 } = action.payload;
+        
+        // Гарантируем что items - массив
+        const items = Array.isArray(action.payload?.items) 
+          ? action.payload.items 
+          : [];
+        
+        // Гарантируем что total - число
+        const total = Number.isInteger(action.payload?.total) 
+          ? action.payload.total 
+          : items.length;
 
-        if (page === 1) {
+        if (action.payload.page === 1) {
           state.items = items;
         } else {
-          // без дублів???
-          const newItems = items.filter(
-            newItem => !state.items.some(existingItem => existingItem.id === newItem.id)
-          );
+          const existingIds = new Set(state.items.map(item => item.id));
+          const newItems = items.filter(item => !existingIds.has(item.id));
           state.items = [...state.items, ...newItems];
         }
-      
 
         state.total = total;
-        state.pagination = {
-          ...state.pagination,
-          page,
-          limit
-        };
+        state.pagination.page = action.payload.page || 1;
       })
       .addCase(fetchCampers.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.error = action.payload || 'Unknown error';
+        state.items = []; // Очищаем при ошибке
       })
-      
-      // для одного по айді
       .addCase(fetchCamperById.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -101,5 +90,5 @@ const campersSlice = createSlice({
   }
 });
 
-export const { setFilters, setPage, toggleFavorite, clearCampers } = campersSlice.actions;
+export const { setFilters, setPage, clearCampers } = campersSlice.actions;
 export default campersSlice.reducer;
