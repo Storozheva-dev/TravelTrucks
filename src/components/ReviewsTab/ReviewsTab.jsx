@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCamperById } from '../../redux/campers/operations';
 import { selectCurrentCamper, selectIsLoading } from '../../redux/campers/selectors';
 import { StarFullIcon, StarEmptyIcon } from '../../icons';
+import Loader from '../../components/Loader/Loader';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ReviewsTab = () => {
   const dispatch = useDispatch();
@@ -14,8 +17,15 @@ const ReviewsTab = () => {
     if (camper?.id) dispatch(fetchCamperById(camper.id));
   }, [camper?.id, dispatch]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!camper) return <p>Reviews not found</p>;
+  useEffect(() => {
+    if (!isLoading && !camper) {
+      toast.warning("Reviews not found");
+    }
+  }, [isLoading, camper]);
+
+
+  if (isLoading) return <Loader />;
+  
 
   const renderStars = (rating) =>
     Array.from({ length: 5 }, (_, i) =>

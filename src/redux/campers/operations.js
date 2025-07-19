@@ -6,7 +6,7 @@ const BASE_URL = "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers";
 const fetchCampers = createAsyncThunk(
   "campers/fetchCampers",
   async (filters = {}, { rejectWithValue }) => {
-    console.log("🔍 filters из Redux:", filters);
+    // console.log("filters из Redux:", filters);
 
     try {
    const supportedParams = {
@@ -26,7 +26,7 @@ if (filters.transmission && filters.transmission.trim() !== '') {
   supportedParams.transmission = filters.transmission.trim();
 }
 
-// Только если true, передаём булевы фильтры:
+// Только если true
 ['AC', 'kitchen', 'TV', 'bathroom'].forEach(key => {
   if (filters[key] === true) {
     supportedParams[key] = true;
@@ -34,12 +34,6 @@ if (filters.transmission && filters.transmission.trim() !== '') {
 });
 
 
-
-
-      console.log("📦 Params sent to API:", supportedParams);
-
-
-      // Далее - запрос к API с этими параметрами
       const response = await axios.get(BASE_URL, {
         params: supportedParams,
         timeout: 5000,
@@ -68,6 +62,8 @@ if (filters.transmission && filters.transmission.trim() !== '') {
   }
 );
 
+
+// по айді
 const fetchCamperById = createAsyncThunk(
   "campers/fetchCamperById",
   async (id, { rejectWithValue }) => {

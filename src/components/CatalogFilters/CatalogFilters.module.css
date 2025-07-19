@@ -36,7 +36,17 @@
     height: 20px;
     position: absolute;
     top: 40%;
-    left: 20px;   
+    left: 20px;
+    color: #6c717b;
+    transition: all 0.3s ease;
+}
+.iconMap:active {
+    color: var(--main)
+}
+
+.input:focus+.iconMap,
+.input:not(:placeholder-shown)+.iconMap {
+    color: var(--main);
 }
 .title {
     font-weight: 600;
@@ -72,9 +82,15 @@
    
 }
 .itemFilter:hover{
-    border: 1px solid var(--button-hover);
-    
+    border: 1px solid var(--button);   
 }
+
+.itemFilter.checked {
+    border: 1px solid var(--button-hover);
+}
+
+
+
 .customCheckbox {
     display: flex;
     align-items: center;
@@ -117,5 +133,8 @@
 }
 .button:active {
     transform: scale(0.95);
+}
+.button:focus {
+    outline: none;
 }
 

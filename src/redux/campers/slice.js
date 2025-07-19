@@ -72,12 +72,12 @@ const campersSlice = createSlice({
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.isLoading = false;
         
-        // Гарантируем что items - массив
+        
         const items = Array.isArray(action.payload?.items) 
           ? action.payload.items 
           : [];
         
-        // Гарантируем что total - число
+        
         const total = Number.isInteger(action.payload?.total) 
           ? action.payload.total 
           : items.length;
@@ -96,7 +96,7 @@ const campersSlice = createSlice({
       .addCase(fetchCampers.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || 'Unknown error';
-        state.items = []; // Очищаем при ошибке
+        state.items = []; 
       })
       .addCase(fetchCamperById.pending, (state) => {
         state.isLoading = true;

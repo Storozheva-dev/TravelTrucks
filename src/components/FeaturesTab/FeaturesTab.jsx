@@ -4,6 +4,9 @@ import css from './FeaturesTab.module.css';
 import { fetchCamperById } from '../../redux/campers/operations';
 import { selectCurrentCamper, selectIsLoading } from '../../redux/Campers/Selectors';
 import features from '../../constants/features';
+import Loader from '../../components/Loader/Loader';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FeaturesTab = () => {
     const dispatch = useDispatch();
@@ -21,8 +24,10 @@ const FeaturesTab = () => {
         return () => clearTimeout(timerId);
     }, [camper?.id, dispatch]);
 
-    if (isLoading) return <p>Loading...</p>;
-    if (!camper) return <p>Camper not found</p>;
+   
+
+    if (isLoading) return <Loader />;
+    if (!camper) return null;
 
     // меін категорії
     const filteredFeatures = features.filter(({ key }) => {

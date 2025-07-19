@@ -8,11 +8,14 @@ import { setFilters } from "../../redux/campers/slice";
 import { fetchCampers } from "../../redux/campers/operations";
 
 function CatalogFilters() {
+// для мап інпут
+const [isFocused, setIsFocused] = useState(false);
+
+
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
   const [city, setCity] = useState(filters.location || '');
 
-  // Состояния для чекбоксов, инициализируем из Redux-фильтров
   const [equipment, setEquipment] = useState({
     AC: filters.AC || false,
     automatic: filters.transmission === 'automatic',
@@ -27,14 +30,13 @@ function CatalogFilters() {
     alcove: filters.form === 'alcove',
   });
 
-  // Обработчики меняют состояние по onChange инпута
   const handleEquipmentChange = (name) => {
     setEquipment(prev => ({ ...prev, [name]: !prev[name] }));
   };
 
   const handleVehicleTypeChange = (name) => {
     setVehicleType(prev => {
-      // Чтобы был выбор только одного типа (radio-like)
+      // тільки 1 тип кузова
       const reset = { panelTruck: false, fullyIntegrated: false, alcove: false };
       reset[name] = !prev[name];
       return reset;
@@ -54,7 +56,7 @@ function CatalogFilters() {
     if (equipment.bathroom) updatedFilters.bathroom = true;
     if (form) updatedFilters.form = form;
 
-    console.log("Filters to dispatch:", updatedFilters);
+    
 
     dispatch(setFilters(updatedFilters));
     dispatch(fetchCampers(updatedFilters));
@@ -64,14 +66,12 @@ function CatalogFilters() {
     <div className={css.filtersComponent}>
       <div className={css.location}>
         <h2 className={css.nameCategory}>Location</h2>
-        <input 
-          className={css.input} 
-          type="text" 
-          placeholder="City" 
-          value={city} 
-          onChange={(e) => setCity(e.target.value)} 
-        />
-        <MapIcon className={css.iconMap} />
+        <label className={css.inputWrapper}>
+         <input
+          type="text" placeholder="City" value={city}
+           onChange={(e) => setCity(e.target.value)} className={css.input} />
+         <MapIcon className={css.iconMap} />
+       </label>
       </div>
 
       <div className={css.filters}>
@@ -122,6 +122,7 @@ function CatalogFilters() {
                     {type === 'fullyIntegrated' && <FullyIntegratedIcon className={css.icon} />}
                     {type === 'alcove' && <AlcoveIcon className={css.icon} />}
                     <span className={css.spanCategory}>
+                      {/* бо в айпі 3 категорія відмінна від категорії в макеті))))) */}
                       {type === 'panelTruck' ? 'Van' : type === 'fullyIntegrated' ? 'Fully Integrated' : 'Alcove'}
                     </span>
                   </div>

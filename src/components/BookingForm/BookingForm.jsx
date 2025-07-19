@@ -3,12 +3,14 @@ import css from "./BookingForm.module.css";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../Loader/Loader";  // Импортируем твой лоадер
 
 const BookingForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [bookingDate, setBookingDate] = useState(null);
     const [comment, setComment] = useState('');
+    const [isLoading, setIsLoading] = useState(false);  // Состояние лоадера
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,13 +26,17 @@ const BookingForm = () => {
             return;
         }
 
-       
-        toast.success("Booking successful!");
+        setIsLoading(true);
 
-        setName("");
-        setEmail("");
-        setBookingDate(null);
-        setComment("");
+        // Эмуляция отправки, замени на реальный запрос
+        setTimeout(() => {
+            setIsLoading(false);
+            toast.success("Booking successful!");
+            setName("");
+            setEmail("");
+            setBookingDate(null);
+            setComment("");
+        }, 1500);
     };
 
     return (
@@ -47,6 +53,7 @@ const BookingForm = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
+                        disabled={isLoading}
                     />
                 </label>
 
@@ -58,10 +65,11 @@ const BookingForm = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        disabled={isLoading}
                     />
                 </label>
 
-                <BookingDatePicker selectedDate={bookingDate} onChange={setBookingDate} />
+                <BookingDatePicker selectedDate={bookingDate} onChange={setBookingDate} disabled={isLoading} />
 
                 <label>
                     <textarea
@@ -69,11 +77,15 @@ const BookingForm = () => {
                         placeholder="Comment"
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
+                        disabled={isLoading}
                     />
                 </label>
             </div>
 
-            <button className={css.button} type="submit">Send</button>
+            <button className={css.button} type="submit" disabled={isLoading}>
+                {isLoading ? <Loader /> : 'Send'}
+            </button>
+
             <ToastContainer position="top-right" autoClose={3000} />
         </form>
     );

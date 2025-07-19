@@ -2,6 +2,7 @@ import css from "./CatalogPage.module.css";
 import CatalogList from "../../components/CatalogList/CatalogList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../components/Loader/Loader";
 import { 
   selectCampers, 
   selectPagination, 
@@ -10,10 +11,16 @@ import {
   selectFilters
 } from "../../redux/campers/selectors";
 import { fetchCampers } from "../../redux/campers/operations";
-import { setPage, setFilters } from "../../redux/campers/slice";
+import { setPage } from "../../redux/campers/slice";
 import CatalogFilters from "../../components/CatalogFilters/CatalogFilters";
 
 function CatalogPage() {
+
+  // щоб хеш табів не тягнув вниз
+useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const dispatch = useDispatch();
   const campers = useSelector(selectCampers);
   const { hasMore, page } = useSelector(selectPagination);
@@ -23,7 +30,7 @@ function CatalogPage() {
 
   // першапорція
   useEffect(() => {
-  console.log('Fetching with params:', { page, ...filters });
+  // console.log('Fetching with params:', { page, ...filters });
   dispatch(fetchCampers({ page, ...filters }));
 }, [dispatch, page, filters]);
 
@@ -42,25 +49,29 @@ function CatalogPage() {
         <CatalogFilters />
       </aside>
       <main className={css.main}>
-        {error && <p className={css.error}>Error: {error}</p>}
-        
-        <CatalogList items={campers} />
-        
-        {isLoading && <p className={css.loading}>Loading...</p>}
-        
-        {hasMore && !isLoading && (
-          <button
-            className={css.button}
-            onClick={handleLoadMore}
-          >
-            Load more
-          </button>
-        )}
-        
-        {!hasMore && campers.length > 0 && (
-          <p className={css.noMoreText}>No more campers available</p>
-        )}
-      </main>
+  {error && <p className={css.error}>Error: {error}</p>}
+  {/* чеки для лоадера */}
+  {isLoading && campers.length === 0 && <Loader />}
+  {campers.length > 0 && <CatalogList items={campers} />}
+  {!isLoading && campers.length === 0 && <p>No campers found</p>}
+  {hasMore && campers.length > 0 && (
+    <div>
+      <button
+        className={css.button}
+        onClick={handleLoadMore}
+        disabled={isLoading}
+      >
+        Load more
+      </button>
+      {isLoading && <Loader />}
+    </div>
+  )}
+
+  {/* якщо вже після завантяження то */}
+  {!hasMore && campers.length > 0 && (
+    <p className={css.noMoreText}>No more campers available</p>
+  )}
+</main>
     </div>
   );
 }
