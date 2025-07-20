@@ -65,6 +65,8 @@ const BookingForm = () => {
             onChange={(e) => setName(e.target.value)}
             required
             disabled={isLoading}
+            aria-label="Name"
+            name="name"
           />
         </label>
 
@@ -77,6 +79,8 @@ const BookingForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             disabled={isLoading}
+            aria-label="Email"
+            name="email"
           />
         </label>
 
@@ -84,6 +88,8 @@ const BookingForm = () => {
           selectedDate={bookingDate}
           onChange={setBookingDate}
           disabled={isLoading}
+          aria-label="Booking date"
+          name="bookingDate"
         />
 
         <label>
@@ -93,6 +99,8 @@ const BookingForm = () => {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             disabled={isLoading}
+            aria-label="Comment"
+            name="comment"
           />
         </label>
       </div>
