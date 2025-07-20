@@ -20,7 +20,17 @@ const BookingForm = () => {
       return;
     }
 
-    const emailRegex = /\S+@\S+\.\S+/;
+    if (name.trim().length < 3) {
+      toast.error("Name must be at least 3 characters.");
+      return;
+    }
+
+    if (/\d/.test(name)) {
+      toast.error("Name should not contain numbers.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       toast.error("Invalid email address.");
       return;

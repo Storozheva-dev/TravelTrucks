@@ -21,7 +21,7 @@ MockAPI for backend simulation
 Installation:
 
 1. Clone the repository:
-   git clone https://github.com/your-username/camper-rental.git
+   git clone https://github.com/Storozheva-dev/TravelTrucks
 
 2. Navigate to the project folder:
    cd camper-rental

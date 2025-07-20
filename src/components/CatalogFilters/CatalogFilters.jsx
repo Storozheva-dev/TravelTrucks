@@ -147,6 +147,7 @@ function CatalogFilters() {
                 <label>
                   <input
                     type="checkbox"
+                    aria-label
                     checked={vehicleType[type]}
                     onChange={() => handleVehicleTypeChange(type)}
                     className={css.hiddenCheckbox}
