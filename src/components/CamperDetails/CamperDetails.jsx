@@ -5,7 +5,7 @@ import { fetchCamperById } from "../../redux/campers/operations";
 import {
   selectCurrentCamper,
   selectIsLoading,
-} from "../../redux/Campers/selectors";
+} from "../../redux/campers/selectors";
 import { useEffect } from "react";
 import { MapIcon, StarFullIcon } from "../../icons";
 import ImageModal from "../ImageModal/ImageModal";

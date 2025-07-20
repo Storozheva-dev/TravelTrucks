@@ -159,7 +159,6 @@ function CatalogFilters() {
                     )}
                     {type === "alcove" && <AlcoveIcon className={css.icon} />}
                     <span className={css.spanCategory}>
-                      {/* бо в айпі 3 категорія відмінна від категорії в макеті))))) */}
                       {type === "panelTruck"
                         ? "Van"
                         : type === "fullyIntegrated"
