@@ -2,21 +2,21 @@ TravelTrucks SPA
 
 Features:
 
-View a catalog of campers
-Filter campers by various features
-View detailed information for each camper
-Book a camper through a mock booking form
-Responsive for desktop (no mobile or tablet version)
+1. View a catalog of campers
+2. Filter campers by various features
+3. View detailed information for each camper
+4. Book a camper through a mock booking form
+5. Responsive for desktop (no mobile or tablet version)
 ⚠️ Comment submission functionality is not implemented.
 
 Technologies Used:
 
-React
-React Router
-Redux Toolkit
-Axios
-CSS Modules
-MockAPI for backend simulation
+1. React
+2. React Router
+3. Redux Toolkit
+4. Axios
+5. CSS Modules
+6. MockAPI for backend simulation
 
 Installation:
 
